@@ -32,9 +32,29 @@ const insertOrderDetail = async (req, transaction)=>{
     })
 }
 
+const getOrderList = async (req)=>{
+    return await sequelize.query(`
+        SELECT
+            o.order_id,
+            o.member_id,
+            d.item_name,
+            d.item_price,
+            d.item_amount,
+            o.created
+        FROM orders o
+        LEFT JOIN order_details d ON d.order_id = o.order_id
+        ORDER BY o.order_id DESC
+    `)
+    .then(([data])=>{
+        return data
+    })
+}
+
 module.exports = {
     insertOrder,
-    insertOrderDetail
+    insertOrderDetail,
+    getOrderList
 }
+
 
 

@@ -40,5 +40,22 @@ orderRoute.post('/', validToken, async (req, res)=>{
     })
 })
 
+orderRoute.get('/list', validToken, async (req, res)=>{
+    OrderModel.getOrderList()
+    .then((data)=>{
+        res.json({
+            success: true,
+            orders: data
+        })
+    })
+    .catch((err)=>{
+        res.json({
+            success: false,
+            message: err
+        })
+    })
+})
+
+
 module.exports = orderRoute
 
